@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+
+  "name": "On Reddit?",
+  "description": "Checks if the current url has been posted as a link on Reddit. If it has, it will display all subreddits it has been posted in",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "http://reddit.com/*"
+  ]
+}
