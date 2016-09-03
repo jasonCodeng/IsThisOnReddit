@@ -1,6 +1,6 @@
 "use strict";
 
-$( document ).ready(function() {
+$(document).ready(function() {
   getCurrentTabUrl(function(url) {
     renderStatus('Checking reddit for \n' + url);
     getSubredditData(url, function(data) {
@@ -11,11 +11,12 @@ $( document ).ready(function() {
     })
   })
 
-  $('body').on('click', 'a', function(){
+  $('body').on('click', 'a', function() {
     chrome.tabs.create({url: $(this).attr('href')});
     return false;
   });
 });
+
 
 /**
  * Get the current URL of the active tab.
@@ -57,8 +58,6 @@ function renderStatus(statusText) {
 function parseJSON(data) {
 
   var output = '';
-
-  console.log('data',data);
 
   if (!data) {
     output+= 'No posts have been found! You can be the first one to post!';
