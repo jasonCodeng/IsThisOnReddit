@@ -1,5 +1,4 @@
-var content = $("#content");
-var status1 = $("#status");
+"use strict";
 
 $( document ).ready(function() {
   getCurrentTabUrl(function(url) {
@@ -11,6 +10,11 @@ $( document ).ready(function() {
       renderStatus('Cannot display data: ' + error);
     })
   })
+
+  $('body').on('click', 'a', function(){
+    chrome.tabs.create({url: $(this).attr('href')});
+    return false;
+  });
 });
 
 /**
@@ -38,20 +42,29 @@ function getSubredditData(searchUrl, callback, error) {
 
   $.get(searchUrl, function(response) {
     if (!response || !response.data || !response.data.children || response.data.children.length == 0) {
-      error("No response from Reddit!")
+      error("No response from Reddit!");
+      console.log("No response from Reddit!");
       return;
     }
-    console.log(response);
     callback(response);
   })
 }
 
 function renderStatus(statusText) {
-  status1.text(statusText);
+  $("#status").html(statusText);
 }
 
 function parseJSON(data) {
-	var output = '';
+
+  var output = '';
+
+  console.log('data',data);
+
+  if (!data) {
+    output+= 'No posts have been found! You can be the first one to post!';
+    $('#content').html(output);
+    return;
+  }
 	// heading:
 	output +='<h2>Results:</h2><p>' + 'Reddit has ' + data['data']['children'].length +  (data['data']['children'].length == 1?' post':' posts') +  ' for this URL</p>';
 
@@ -59,7 +72,7 @@ function parseJSON(data) {
 	output +='<table><tr><th>Subreddit</th><th>Date</th><th>Comments</th><th>Score</th><th>Link</th></tr>' ;
 
 	// loop through json data:
-	for(i = 0; i < data['data']['children'].length; i++){
+	for(var i = 0; i < data['data']['children'].length; i++){
 		// subreddit cell:
 		output +='<td>/r/' + data['data']['children'][i]['data']['subreddit'] + '</td>';
 		// date parsing:
