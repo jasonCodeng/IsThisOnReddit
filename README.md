@@ -1,6 +1,6 @@
 # Snoo'ed
 
-Snoo'ed is a chrome extension thats checks if the current tab has been submitted on reddit before.
+A chrome extension to see if any reddit discussions has been made for your current page 
 
 ## Contributing
 
